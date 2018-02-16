@@ -1,0 +1,34 @@
+.thumbnail{
+    margin-bottom: 0px;
+    border-radius: 0;
+}
+.nickname{
+    font-weight: bold;
+    width: 130px;
+    padding-left: 7px;
+    border-left: 1px solid gray;
+    display: inline-block;
+}
+.title{
+    width: 175px;
+}
+.btn-delete{
+    display: inline-block;
+    color: red;
+}
+.div-delete{
+    display: inline-block;
+    width: 15px;
+    margin-right: 7px;
+    margin-left: 7px;
+}
+.created-date{
+    display: inline-block;
+    margin-right: 7px;
+}
+.topic-info{
+    /* width: 265px; */
+    display:inline-block;
+    position:absolute;
+    right: 10px;
+}

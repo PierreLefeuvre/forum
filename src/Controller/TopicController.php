@@ -4,6 +4,7 @@ namespace App\Controller;
 use App\Controller\AppController;
 use Cake\ORM\TableRegistry;
 use Cake\Datasource\ConnectionManager;
+use Cake\Collection\Collection;
 
 /**
  * Topic Controller
@@ -13,56 +14,119 @@ use Cake\Datasource\ConnectionManager;
  */
 class TopicController extends AppController
 {
-    var $topics;
+    var $topicsTable;
+    var $postsTable;
     var $db;
 
     function initialize(){
-        $this->topics = TableRegistry::get('Topics');
+        parent::initialize();
+        $this->topicsTable = TableRegistry::get('Topics');
+        $this->postsTable = TableRegistry::get('Posts');
         $this->db = ConnectionManager::get('default');
     }
 
     public function index()
     {
-        $results = $this->db->execute('SELECT * FROM topics JOIN users on users.user_id = topics.user_id')->fetchAll('obj');
+        $results = $this->db->execute('
+            SELECT topics.*, nickname , ip
+            FROM topics 
+            JOIN posts on posts.post_id = (
+                SELECT post_id 
+                FROM posts 
+                WHERE posts.topic_id = topics.topic_id 
+                ORDER BY post_id 
+                LIMIT 1
+            ) 
+            ')->fetchAll('obj');
 
-       // $results = $this->topics->find();
+       // $results = $this->topicsTable->find();
         $this->set('topics', $results);
         $this->render('/Forum/index');
     }
 
     public function view($id = null)
     {
-        $query = "SELECT * FROM topics
-        JOIN users on users.user_id = topics.user_id
-        JOIN posts on posts.topic_id = topics.topic_id
+        //Récupération du topic
+        $query = "SELECT topic_id, title 
+        FROM topics
         WHERE topics.topic_id = '".$id."' ";
 
-        $this->db->execute($query);
-        //$query = $this->topics->get($id);
-        $this->set('data', $query);
+        $result = $this->db->execute($query)->fetch('obj');
+
+        $this->set('topic', $result);
+
+        //récupération des posts
+        $query = "SELECT posts.nickname, topics.topic_id, message, posts.post_id, posts.created
+        FROM topics
+        LEFT JOIN posts on posts.topic_id = topics.topic_id
+        WHERE topics.topic_id = '".$id."' ";
+
+        $result = $this->db->execute($query)->fetchAll('obj');
+
+        $this->set('posts', $result);
+        $this->set('post_id', $id);
+
         $this->render('/Forum/view');
     }
+    public function create()
+    {
+        $this->render('/Forum/create');
+    }
+    public function addPost()
+    {
+        if ($this->request->is('post')) {
 
-    /**
-     * Add method
-     *
-     * @return \Cake\Http\Response|null Redirects on successful add, renders view otherwise.
-     */
+           $postData = $this->request->getData();
+
+            $posts = $this->postsTable->newEntity();
+            $posts->nickname = $postData['nickname'];
+            $posts->topic_id = $postData['topic_id'];
+            $posts->message = $postData['message'];
+            $posts->ip = $_SERVER['REMOTE_ADDR'];
+
+            $okP = $this->postsTable->save($posts);
+
+            if ($okP) {
+                $this->Flash->success('The post has been saved.');
+
+                return $this->redirect(['action' => 'view', $postData['topic_id']]);
+            }
+            $this->Flash->error('The post could not be saved. Please, try again.');
+        }
+        //$this->set(compact('topic'));
+    }
     public function add()
     {
-        $topic = $this->Topic->newEntity();
         if ($this->request->is('post')) {
-            $topic = $this->Topic->patchEntity($topic, $this->request->getData());
-            if ($this->Topic->save($topic)) {
-                $this->Flash->success(__('The topic has been saved.'));
+          
+            $postData = $this->request->getData();
 
+            //$collection = new Collection($this->request->getData());
+            // $topics = $collection->filter(function($value, $key, $iterator){
+            //     return in_array($key, ['title']);
+            // });
+
+            $topics = $this->topicsTable->newEntity();
+            $topics->title = $postData['title'];
+            $okT = $this->topicsTable->save($topics);
+            
+            $posts = $this->postsTable->newEntity();
+            $posts->nickname = $postData['nickname'];
+            $posts->topic_id = $topics->topic_id;
+            $posts->message = $postData['message'];
+            $posts->ip = $_SERVER['REMOTE_ADDR'];
+
+            $okP = $this->postsTable->save($posts);
+            
+            if ($okP && $okT) {
+                $this->Flash->success('The topic has been saved.');
                 return $this->redirect(['action' => 'index']);
             }
-            $this->Flash->error(__('The topic could not be saved. Please, try again.'));
-        }
-        $this->set(compact('topic'));
-    }
 
+            $this->Flash->error('The topic could not be saved. Please, try again.');
+        }
+        $this->redirect(['action' => 'create']);
+    }
     /**
      * Edit method
      *
@@ -70,21 +134,29 @@ class TopicController extends AppController
      * @return \Cake\Http\Response|null Redirects on successful edit, renders view otherwise.
      * @throws \Cake\Network\Exception\NotFoundException When record not found.
      */
+ /*   public function edit($id = null)
+    {
+        $this->set('post_id', $id);
+        $post = $this->postsTable->get($id);
+        $this->set(compact('post'));
+        $this->render('/Forum/edit/');
+    }*/
+
     public function edit($id = null)
     {
-        $topic = $this->Topic->get($id, [
-            'contain' => []
-        ]);
+        $post = $this->postsTable->get($id);
+
         if ($this->request->is(['patch', 'post', 'put'])) {
-            $topic = $this->Topic->patchEntity($topic, $this->request->getData());
-            if ($this->Topic->save($topic)) {
+            $post = $this->postsTable->patchEntity($post, $this->request->getData());
+            if ($this->postsTable->save($post)) {
                 $this->Flash->success(__('The topic has been saved.'));
 
                 return $this->redirect(['action' => 'index']);
             }
             $this->Flash->error(__('The topic could not be saved. Please, try again.'));
         }
-        $this->set(compact('topic'));
+        $this->set(compact('post'));
+        $this->render('/Forum/edit/');
     }
 
     /**
@@ -96,9 +168,13 @@ class TopicController extends AppController
      */
     public function delete($id = null)
     {
-        $this->request->allowMethod(['post', 'delete']);
-        $topic = $this->Topic->get($id);
-        if ($this->Topic->delete($topic)) {
+        $this->request->allowMethod(['GET','post', 'delete']);
+
+        $this->topicsTable->newEntity();
+
+        $topic = $this->topicsTable->get($id);
+
+        if ($this->topicsTable->delete($topic)) {
             $this->Flash->success(__('The topic has been deleted.'));
         } else {
             $this->Flash->error(__('The topic could not be deleted. Please, try again.'));

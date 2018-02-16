@@ -1,0 +1,32 @@
+.post{
+    min-height: 100px;
+    padding: 5px;
+     border-radius: 0.2rem;
+    border-color: #6c757d;
+    border: 1px solid #ddd;
+    margin-bottom: 4px;
+    margin-top: 4px;
+    box-shadow: 0 1px #FFFFFF inset, 0 1px 3px rgba(34, 25, 25, 0.3);
+}
+.c1{
+    background-color: #ffffff;
+}
+.c2{
+    background-color: #f9f9f9;
+}
+.nickname{
+    font-weight: bold;
+    display: inline-block;
+}
+.topic{
+    margin-bottom: 100px;
+}
+.post-message{
+    margin-top: 15px;
+    margin-left: 7px;
+    display: block;
+}
+.form-answer{
+    margin-top: 10px;
+
+}
