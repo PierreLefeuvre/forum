@@ -1,7 +1,9 @@
 .post{
-    min-height: 100px;
+    /* min-height: 100px; */
     padding: 5px;
-     border-radius: 0.2rem;
+    padding-bottom: 20px;
+    /* padding-top: 20px; */
+    border-radius: 0.2rem;
     border-color: #6c757d;
     border: 1px solid #ddd;
     margin-bottom: 4px;
@@ -22,11 +24,18 @@
     margin-bottom: 100px;
 }
 .post-message{
-    margin-top: 15px;
+    margin-top: 20px;
     margin-left: 7px;
+    margin-bottom: 5px;
     display: block;
+    /* padding-top: 20px; */
 }
 .form-answer{
     margin-top: 10px;
 
+}
+.btn-edit{
+    position: relative;
+    bottom: 0px;
+    right: 6px;
 }

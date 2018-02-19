@@ -56,7 +56,7 @@ class TopicController extends AppController
         $this->set('topic', $result);
 
         //récupération des posts
-        $query = "SELECT posts.nickname, topics.topic_id, message, posts.post_id, posts.created
+        $query = "SELECT posts.nickname, topics.topic_id, message, posts.post_id, posts.created, posts.ip
         FROM topics
         LEFT JOIN posts on posts.topic_id = topics.topic_id
         WHERE topics.topic_id = '".$id."' ";
@@ -106,14 +106,14 @@ class TopicController extends AppController
             //     return in_array($key, ['title']);
             // });
 
-            $topics = $this->topicsTable->newEntity();
-            $topics->title = $postData['title'];
+            $topics = $this->topicsTable->newEntity($this->request->getData());
+            //$topics->title = $postData['title'];
             $okT = $this->topicsTable->save($topics);
             
-            $posts = $this->postsTable->newEntity();
-            $posts->nickname = $postData['nickname'];
+            $posts = $this->postsTable->newEntity($this->request->getData());
+            //$posts->nickname = $postData['nickname'];
             $posts->topic_id = $topics->topic_id;
-            $posts->message = $postData['message'];
+            //$posts->message = $postData['message'];
             $posts->ip = $_SERVER['REMOTE_ADDR'];
 
             $okP = $this->postsTable->save($posts);
@@ -127,20 +127,6 @@ class TopicController extends AppController
         }
         $this->redirect(['action' => 'create']);
     }
-    /**
-     * Edit method
-     *
-     * @param string|null $id Topic id.
-     * @return \Cake\Http\Response|null Redirects on successful edit, renders view otherwise.
-     * @throws \Cake\Network\Exception\NotFoundException When record not found.
-     */
- /*   public function edit($id = null)
-    {
-        $this->set('post_id', $id);
-        $post = $this->postsTable->get($id);
-        $this->set(compact('post'));
-        $this->render('/Forum/edit/');
-    }*/
 
     public function edit($id = null)
     {
@@ -151,7 +137,7 @@ class TopicController extends AppController
             if ($this->postsTable->save($post)) {
                 $this->Flash->success(__('The topic has been saved.'));
 
-                return $this->redirect(['action' => 'index']);
+                return $this->redirect(['action' => 'view',$this->request->getData()['topic_id']]);
             }
             $this->Flash->error(__('The topic could not be saved. Please, try again.'));
         }

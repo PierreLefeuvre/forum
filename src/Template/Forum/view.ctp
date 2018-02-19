@@ -21,10 +21,10 @@
                     </div>
                 </div>
                 <div>
-                    <div class='post-message'><?= $post->message ?></div>
+                    <div class='post-message'><?= nl2br(htmlspecialchars($post->message)); ?></div>
                     
-                    <div class='pull-right'>
-                        <?php if($topic->ip == $_SERVER['REMOTE_ADDR']): ?>
+                    <div class='btn-edit pull-right'>
+                        <?php if($post->ip == $_SERVER['REMOTE_ADDR']): ?>
                             <a href="/topic/edit/<?= $post->post_id ?>" >edit</a>
                         <?php endif; ?>
                     </div>
@@ -36,7 +36,7 @@
             <form action='/topic/addpost' method='POST' class='form-answer'>
 
                 <div class='form-group'>
-                    <textarea  name='message' class='form-control' rows='4' required></textarea>
+                    <textarea  name='message' class='form-control' rows='5' required></textarea>
                 </div>
 
                 <div class='form-inline'>
