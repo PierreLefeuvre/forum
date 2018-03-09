@@ -58,9 +58,15 @@ Router::scope('/', function (RouteBuilder $routes) {
      */
     $routes->connect('/pages/*', ['controller' => 'Pages', 'action' => 'display']);
 
-    $routes->connect('/forum/topic', ['controller' => 'Topic']);
+    $routes->connect('/forum', ['controller' => 'Topic']);
+    $routes->connect(
+        '/forum/:id', 
+        ['controller' => 'Topic', 'action'=>'view']
+    )
+    ->setPass(['id']);
+    ;
 
-    /**
+    /** 
      * Connect catchall routes for all controllers.
      *
      * Using the argument `DashedRoute`, the `fallbacks` method is a shortcut for

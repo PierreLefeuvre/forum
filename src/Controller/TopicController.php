@@ -16,30 +16,29 @@ class TopicController extends AppController
 {
     var $topicsTable;
     var $postsTable;
-    var $db;
+    public $paginate = [
+        'limit' => 10,
+        'order' => [
+            'Topics.created' => 'asc'
+        ]
+    ];
 
     function initialize(){
         parent::initialize();
         $this->topicsTable = TableRegistry::get('Topics');
         $this->postsTable = TableRegistry::get('Posts');
-        $this->db = ConnectionManager::get('default');
+        $this->loadComponent('Paginator');
     }
 
     public function index()
     {
-        $results = $this->db->execute('
-            SELECT topics.*, nickname , ip
-            FROM topics 
-            JOIN posts on posts.post_id = (
-                SELECT post_id 
-                FROM posts 
-                WHERE posts.topic_id = topics.topic_id 
-                ORDER BY post_id 
-                LIMIT 1
-            ) 
-            ')->fetchAll('obj');
+        $this->paginate['page'] = $this->request->getQuery('page');
+        // $this->paginate['sort'] = $this->request->getQuery('sort');
+        // $this->paginate['direction'] = $this->request->getQuery('direction');
+        // $this->paginate['limit'] = $this->request->getQuery('limit');
 
-       // $results = $this->topicsTable->find();
+        $results = $this->topicsTable->getTopics($this->paginate);
+       // debug($results);
         $this->set('topics', $results);
         $this->render('/Forum/index');
     }
@@ -47,22 +46,11 @@ class TopicController extends AppController
     public function view($id = null)
     {
         //Récupération du topic
-        $query = "SELECT topic_id, title 
-        FROM topics
-        WHERE topics.topic_id = '".$id."' ";
-
-        $result = $this->db->execute($query)->fetch('obj');
-
+        $result = $this->topicsTable->getTopic($id);
         $this->set('topic', $result);
 
         //récupération des posts
-        $query = "SELECT posts.nickname, topics.topic_id, message, posts.post_id, posts.created, posts.ip
-        FROM topics
-        LEFT JOIN posts on posts.topic_id = topics.topic_id
-        WHERE topics.topic_id = '".$id."' ";
-
-        $result = $this->db->execute($query)->fetchAll('obj');
-
+        $result = $this->postsTable->getPosts($id);
         $this->set('posts', $result);
         $this->set('post_id', $id);
 
@@ -88,7 +76,6 @@ class TopicController extends AppController
 
             if ($okP) {
                 $this->Flash->success('The post has been saved.');
-
                 return $this->redirect(['action' => 'view', $postData['topic_id']]);
             }
             $this->Flash->error('The post could not be saved. Please, try again.');

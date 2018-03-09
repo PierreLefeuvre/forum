@@ -5,6 +5,7 @@ use Cake\ORM\Query;
 use Cake\ORM\RulesChecker;
 use Cake\ORM\Table;
 use Cake\Validation\Validator;
+use Cake\Datasource\ConnectionManager;
 
 /**
  * Topics Model
@@ -35,6 +36,8 @@ class TopicsTable extends Table
         $this->setPrimaryKey('topic_id');
 
         $this->addBehavior('Timestamp');
+
+        $this->db = ConnectionManager::get('default');
     }
 
     /**
@@ -55,5 +58,40 @@ class TopicsTable extends Table
             ->allowEmpty('title');
 
         return $validator;
+    }
+
+    public function getTopics($paginate)
+    {
+        $limit = $paginate['limit'];
+        $page = $paginate['page'] == 0 ? 1 : $paginate['page'];
+        $offset = $page * $limit - $limit;
+
+        $query = "
+        SELECT SQL_CALC_FOUND_ROWS topics.*, nickname , ip
+        FROM topics 
+        JOIN posts on posts.post_id = (
+            SELECT post_id 
+            FROM posts 
+            WHERE posts.topic_id = topics.topic_id 
+            ORDER BY post_id 
+            LIMIT 1
+        ) LIMIT $offset, $limit";
+
+        $result['result'] = $this->db->execute($query)->fetchAll('obj');
+        $result['total'] = $this->db->execute("SELECT FOUND_ROWS() as total ")->fetch('obj')->total;
+        $result['pageCount'] = ceil($result['total']/ $limit); 
+        $result['limit'] = $limit;
+        $result['page'] = $page;
+        
+        return $result;
+    }
+
+    public function getTopic($topic_id)
+    {
+        $query = "SELECT topic_id, title 
+        FROM topics
+        WHERE topics.topic_id = '".$topic_id."' ";
+
+        return $this->db->execute($query)->fetch('obj');
     }
 }

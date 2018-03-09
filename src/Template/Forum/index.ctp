@@ -4,7 +4,7 @@
 
 <div class="row">
     <div class="col-md-offset-2 col-md-8">
-        <?php foreach($topics as $topic): ?>
+        <?php foreach($topics['result'] as $topic): ?>
 
             <div class="thumbnail">
 
@@ -14,7 +14,7 @@
 
                 <div class='pull-right topic-info' >
 
-                    <div class='created-date'><?= $this->Date->formatDatetime($topic->created); ?></div>
+                    <div class='created-date'><?= $this->Date->formatDate($topic->created); ?></div>
 
                     <div class='nickname'>
                         <?= mb_strimwidth($topic->nickname, 0, 17, "...") ?>
@@ -32,8 +32,17 @@
         
         <?php endforeach; ?>
         
+        
+    <div>
+    Page:
+        <?php for($i=1; $i <= $topics['pageCount']; $i++): ?>
+            <a href="<?php echo $this->Paginator->generateUrl(['page' => $i]) ?>"><?= $i ?></a>
+        <?php endfor; ?>
+    </div>
+    
     </div>
     <div class='col-md-2'>
         <a href='/topic/create' type='button' class='btn btn-default'>+ Topic</a>
     </div>
 </div>
+

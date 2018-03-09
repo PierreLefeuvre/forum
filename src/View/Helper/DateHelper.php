@@ -18,12 +18,12 @@ class DateHelper extends Helper
     protected $_defaultConfig = [];
 
     /**
-     * Renvoi au format $pastFormat si la date est aujourd'hui. Renvoi au farmt $todayFormat sinon.
+     * Renvoi au format $todayFormat si la date est aujourd'hui. Renvoi au formt $pastFormat si la date est passé.
      */
-    public function formatDatetime($datetime, $pastFormat = 'd/m/Y', $todayFormat = 'H:i:s'){
-        if(date('Ymd', strtotime($datetime)) == date('Ymd'))
-            return date($todayFormat, strtotime($datetime));
+    public function formatDate($date, $pastFormat = 'd/m/Y', $todayFormat = 'H:i:s'){
+        if(date('Ymd', strtotime($date)) == date('Ymd'))
+            return date($todayFormat, strtotime($date));
         else
-            return date($pastFormat, strtotime($datetime));
+            return date($pastFormat, strtotime($date));
     }
 }

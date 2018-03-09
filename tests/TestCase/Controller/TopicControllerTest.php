@@ -1,13 +1,13 @@
 <?php
 namespace App\Test\TestCase\Controller;
 
-use App\Controller\TopicController;
+use App\Controller\topicController;
 use Cake\TestSuite\IntegrationTestCase;
 
 /**
- * App\Controller\TopicController Test Case
+ * App\Controller\topicController Test Case
  */
-class TopicControllerTest extends IntegrationTestCase
+class topicControllerTest extends IntegrationTestCase
 {
 
     /**
@@ -16,55 +16,15 @@ class TopicControllerTest extends IntegrationTestCase
      * @var array
      */
     public $fixtures = [
-        'app.topic'
+        'app.topics'
     ];
 
     /**
-     * Test index method
+     * Test initial setup
      *
      * @return void
      */
-    public function testIndex()
-    {
-        $this->markTestIncomplete('Not implemented yet.');
-    }
-
-    /**
-     * Test view method
-     *
-     * @return void
-     */
-    public function testView()
-    {
-        $this->markTestIncomplete('Not implemented yet.');
-    }
-
-    /**
-     * Test add method
-     *
-     * @return void
-     */
-    public function testAdd()
-    {
-        $this->markTestIncomplete('Not implemented yet.');
-    }
-
-    /**
-     * Test edit method
-     *
-     * @return void
-     */
-    public function testEdit()
-    {
-        $this->markTestIncomplete('Not implemented yet.');
-    }
-
-    /**
-     * Test delete method
-     *
-     * @return void
-     */
-    public function testDelete()
+    public function testInitialization()
     {
         $this->markTestIncomplete('Not implemented yet.');
     }

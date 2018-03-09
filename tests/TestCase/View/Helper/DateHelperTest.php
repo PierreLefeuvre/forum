@@ -1,22 +1,22 @@
 <?php
 namespace App\Test\TestCase\View\Helper;
 
-use App\View\Helper\DateHelper;
+use App\View\Helper\dateHelper;
 use Cake\TestSuite\TestCase;
 use Cake\View\View;
 
 /**
- * App\View\Helper\DateHelper Test Case
+ * App\View\Helper\dateHelper Test Case
  */
-class DateHelperTest extends TestCase
+class dateHelperTest extends TestCase
 {
 
     /**
      * Test subject
      *
-     * @var \App\View\Helper\DateHelper
+     * @var \App\View\Helper\dateHelper
      */
-    public $Date;
+    public $date;
 
     /**
      * setUp method
@@ -27,7 +27,7 @@ class DateHelperTest extends TestCase
     {
         parent::setUp();
         $view = new View();
-        $this->Date = new DateHelper($view);
+        $this->date = new dateHelper($view);
     }
 
     /**
@@ -37,7 +37,7 @@ class DateHelperTest extends TestCase
      */
     public function tearDown()
     {
-        unset($this->Date);
+        unset($this->date);
 
         parent::tearDown();
     }
@@ -50,5 +50,13 @@ class DateHelperTest extends TestCase
     public function testInitialization()
     {
         $this->markTestIncomplete('Not implemented yet.');
+    }
+
+    public function testFormatDate()
+    {
+        $date = '2018-02-20 18:12:35';
+        $result = $this->date->formatDate($date);
+
+        $this->assertEquals('20/02/2018', $result);
     }
 }

@@ -5,6 +5,7 @@ use Cake\ORM\Query;
 use Cake\ORM\RulesChecker;
 use Cake\ORM\Table;
 use Cake\Validation\Validator;
+use Cake\Datasource\ConnectionManager;
 
 /**
  * Posts Model
@@ -43,6 +44,8 @@ class PostsTable extends Table
         $this->belongsTo('Topics', [
             'foreignKey' => 'topic_id'
         ]);
+
+        $this->db = ConnectionManager::get('default');
     }
 
     /**
@@ -86,5 +89,15 @@ class PostsTable extends Table
         $rules->add($rules->existsIn(['topic_id'], 'Topics'));
 
         return $rules;
+    }
+
+    public function getPosts($topic_id)
+    {
+        $query = "SELECT posts.nickname, topics.topic_id, message, posts.post_id, posts.created, posts.ip
+        FROM topics
+        LEFT JOIN posts on posts.topic_id = topics.topic_id
+        WHERE topics.topic_id = '".$topic_id."' ";
+
+        return $this->db->execute($query)->fetchAll('obj');
     }
 }

@@ -17,7 +17,7 @@
                 <div>
                     <div class='nickname'><?= $post->nickname ?></div>
                     <div class='pull-right'>
-                        <?= $this->Date->formatDatetime($post->created, 'Y-m-d H:i:s'); ?>
+                        <?= $this->Date->formatDate($post->created, 'Y-m-d H:i:s'); ?>
                     </div>
                 </div>
                 <div>
@@ -32,6 +32,8 @@
             </div>
 
             <?php endforeach; ?>
+
+            <a href="<?php echo $this->Paginator->generateUrl(['page' => '2']) ?>">2</a>
 
             <form action='/topic/addpost' method='POST' class='form-answer'>
 
