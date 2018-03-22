@@ -8,7 +8,7 @@
 
             <div class="thumbnail">
 
-                <a href="/topic/view/<?= $topic->topic_id ?>">
+                <a href="<?= $this->url->build(['_name'=>'viewTopic', 'id'=> $topic->topic_id]) ?>">
                     <span class='title'><?= mb_strimwidth($topic->title, 0, 95, '...') ?></span>
                 </a>
 
@@ -22,7 +22,8 @@
                     
                     <div class='div-delete'>
                         <?php if($topic->ip == $_SERVER['REMOTE_ADDR']): ?>
-                            <a href="/topic/delete/<?=  $topic->topic_id; ?>" class='btn-delete'>X</a>
+                        
+                            <a href="<?= $this->url->build(['_name'=>'deleteTopic', 'id'=> $topic->topic_id]) ?>" class='btn-delete'>X</a>
                         <?php endif; ?>
                     </div>
                 
@@ -32,7 +33,7 @@
         
         <?php endforeach; ?>
         
-        
+    <br>
     <div>
     Page:
         <?php for($i=1; $i <= $topics['pageCount']; $i++): ?>
@@ -42,7 +43,7 @@
     
     </div>
     <div class='col-md-2'>
-        <a href='/topic/create' type='button' class='btn btn-default'>+ Topic</a>
+        <a href="<?= $this->url->build(['_name'=>'createTopic']) ?>" type='button' class='btn btn-default'>+ Topic</a>
     </div>
 </div>
 

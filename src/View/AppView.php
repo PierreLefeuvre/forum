@@ -15,6 +15,7 @@ namespace App\View;
 
 use Cake\View\View;
 
+
 /**
  * Application View
  *
@@ -38,5 +39,7 @@ class AppView extends View
     {
         $this->loadHelper('Date');
         $this->loadHelper('Paginator');
+        $this->loadHelper('Lang');
+        $this->loadHelper('Url');
     }
 }

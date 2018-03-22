@@ -17,10 +17,7 @@ class TopicController extends AppController
     var $topicsTable;
     var $postsTable;
     public $paginate = [
-        'limit' => 10,
-        'order' => [
-            'Topics.created' => 'asc'
-        ]
+        'limit' => 10
     ];
 
     function initialize(){
@@ -28,17 +25,13 @@ class TopicController extends AppController
         $this->topicsTable = TableRegistry::get('Topics');
         $this->postsTable = TableRegistry::get('Posts');
         $this->loadComponent('Paginator');
+
+        $this->paginate['page'] = $this->request->getQuery('page');
     }
 
     public function index()
     {
-        $this->paginate['page'] = $this->request->getQuery('page');
-        // $this->paginate['sort'] = $this->request->getQuery('sort');
-        // $this->paginate['direction'] = $this->request->getQuery('direction');
-        // $this->paginate['limit'] = $this->request->getQuery('limit');
-
         $results = $this->topicsTable->getTopics($this->paginate);
-       // debug($results);
         $this->set('topics', $results);
         $this->render('/Forum/index');
     }
@@ -50,7 +43,8 @@ class TopicController extends AppController
         $this->set('topic', $result);
 
         //récupération des posts
-        $result = $this->postsTable->getPosts($id);
+        $this->paginate['limit'] = 20;
+        $result = $this->postsTable->getPosts($id, $this->paginate);
         $this->set('posts', $result);
         $this->set('post_id', $id);
 
@@ -76,7 +70,7 @@ class TopicController extends AppController
 
             if ($okP) {
                 $this->Flash->success('The post has been saved.');
-                return $this->redirect(['action' => 'view', $postData['topic_id']]);
+                return $this->redirect(['_name' => 'viewTopic', 'id' => $postData['topic_id']]);
             }
             $this->Flash->error('The post could not be saved. Please, try again.');
         }
@@ -107,24 +101,24 @@ class TopicController extends AppController
             
             if ($okP && $okT) {
                 $this->Flash->success('The topic has been saved.');
-                return $this->redirect(['action' => 'index']);
+                return $this->redirect(['_name' => 'forum']);
             }
 
             $this->Flash->error('The topic could not be saved. Please, try again.');
         }
-        $this->redirect(['action' => 'create']);
+        return $this->redirect(['_name' => 'createTopic']);
     }
 
-    public function edit($id = null)
+    public function edit($post_id, $topic_id = null)
     {
-        $post = $this->postsTable->get($id);
+        $post = $this->postsTable->get($post_id);
 
         if ($this->request->is(['patch', 'post', 'put'])) {
             $post = $this->postsTable->patchEntity($post, $this->request->getData());
             if ($this->postsTable->save($post)) {
                 $this->Flash->success(__('The topic has been saved.'));
 
-                return $this->redirect(['action' => 'view',$this->request->getData()['topic_id']]);
+                return $this->redirect(['action' => 'view', $topic_id]);
             }
             $this->Flash->error(__('The topic could not be saved. Please, try again.'));
         }
@@ -153,6 +147,6 @@ class TopicController extends AppController
             $this->Flash->error(__('The topic could not be deleted. Please, try again.'));
         }
 
-        return $this->redirect(['action' => 'index']);
+        return $this->redirect(['_name' => 'forum']);
     }
 }

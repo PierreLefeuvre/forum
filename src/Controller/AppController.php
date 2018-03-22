@@ -16,6 +16,7 @@ namespace App\Controller;
 
 use Cake\Controller\Controller;
 use Cake\Event\Event;
+use Cake\I18n\I18n;
 
 /**
  * Application Controller
@@ -43,6 +44,11 @@ class AppController extends Controller
 
         $this->loadComponent('RequestHandler');
         $this->loadComponent('Flash');
+
+        //récupération de la langue
+        $lang = $this->request->getParam('lang');
+        //définition de la langue
+        I18n::setLocale($lang);
 
         /*
          * Enable the following components for recommended CakePHP security settings.

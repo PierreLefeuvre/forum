@@ -43,8 +43,6 @@ use Cake\Routing\Route\DashedRoute;
  */
 Router::defaultRouteClass(DashedRoute::class);
 
-
-
 Router::scope('/', function (RouteBuilder $routes) {
     /**
      * Here, we are connecting '/' (base path) to a controller called 'Pages',
@@ -58,13 +56,57 @@ Router::scope('/', function (RouteBuilder $routes) {
      */
     $routes->connect('/pages/*', ['controller' => 'Pages', 'action' => 'display']);
 
-    $routes->connect('/forum', ['controller' => 'Topic']);
     $routes->connect(
-        '/forum/:id', 
-        ['controller' => 'Topic', 'action'=>'view']
+        '/:lang/forum', 
+        ['controller' => 'Topic'],
+        ['_name' => 'forum']
     )
-    ->setPass(['id']);
-    ;
+    ->setPersist(['lang']);
+
+    $routes->connect(
+        '/:lang/forum/topic/create', 
+        ['controller' => 'Topic', 'action' => 'create'],
+        ['_name' => 'createTopic']
+    )
+    ->setPersist(['lang']);
+
+    $routes->connect(
+        '/:lang/forum/topic/:id', 
+        ['controller' => 'Topic', 'action'=>'view'],
+        ['_name' => 'viewTopic']
+    )
+    ->setPass(['id'])
+    ->setPersist(['lang', 'id']);
+    
+    $routes->connect(
+        '/:lang/forum/topic/delete/:id', 
+        ['controller' => 'Topic', 'action'=>'delete'],
+        ['_name' => 'deleteTopic']
+    )
+    ->setPass(['id'])
+    ->setPersist(['lang']);
+    
+    $routes->connect(
+        '/:lang/forum/topic/:topic_id/edit/:post_id', 
+        ['controller' => 'Topic', 'action'=>'edit'],
+        ['_name' => 'editPost']
+    )
+    ->setPass(['post_id', 'topic_id'])
+    ->setPersist(['lang']);
+
+    $routes->connect(
+        '/:lang/forum/topic/post/add', 
+        ['controller' => 'Topic', 'action'=>'addPost'],
+        ['_name' => 'addPost']
+    )
+    ->setPersist(['lang']);
+
+    $routes->connect(
+        '/:lang/forum/topic/add', 
+        ['controller' => 'Topic', 'action'=>'add'],
+        ['_name' => 'addTopic']
+    )
+    ->setPersist(['lang']);
 
     /** 
      * Connect catchall routes for all controllers.

@@ -1,0 +1,5 @@
+msgid "Forum"
+msgstr "Le Forum"
+
+msgid "Title"
+msgstr "Titre"

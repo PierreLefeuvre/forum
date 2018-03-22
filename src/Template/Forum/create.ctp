@@ -4,10 +4,10 @@
 <div class="row">
     <div class="col-md-offset-2 col-md-8">
 
-        <form action='/topic/add' method='POST'>
+        <form action="<?= $this->url->build(['_name' => 'addTopic']) ?>" method='POST'>
 
             <div class='form-group'>
-                <label>Titre</label>
+                <label><?= __('Title') ?></label>
                     <input type='text' class='form-control' name='title' required/>
             </div>
 

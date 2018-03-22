@@ -10,7 +10,7 @@
         <div class='topic'>
 
             <?php $i = 0; ?>
-            <?php foreach($posts as $post): ?>
+            <?php foreach($posts['result'] as $post): ?>
             <?php $c = (++$i % 2 == 0) ? 'c1' : 'c2'; ?>
 
             <div class="post <?= $c ?>">
@@ -25,7 +25,7 @@
                     
                     <div class='btn-edit pull-right'>
                         <?php if($post->ip == $_SERVER['REMOTE_ADDR']): ?>
-                            <a href="/topic/edit/<?= $post->post_id ?>" >edit</a>
+                            <a href="<?= $this->url->build(['_name'=>'editPost', 'post_id' => $post->post_id, 'topic_id' => $post->topic_id]) ?>" >edit</a>
                         <?php endif; ?>
                     </div>
                 </div>
@@ -33,9 +33,15 @@
 
             <?php endforeach; ?>
 
-            <a href="<?php echo $this->Paginator->generateUrl(['page' => '2']) ?>">2</a>
+            <div>
+            Page:
+                <?php for($i=1; $i <= $posts['pageCount']; $i++): ?>
+                    <!-- <a href="<?php echo $this->Paginator->generateUrl(['page' => $i]) ?>"><?= $i ?></a> -->
+                    <?= $this->html->link($i, ['page' => $i]) ?>
+                <?php endfor; ?>
+            </div>
 
-            <form action='/topic/addpost' method='POST' class='form-answer'>
+            <form action="<?= $this->url->build(['_name' => 'addPost']) ?>" method='POST' class='form-answer'>
 
                 <div class='form-group'>
                     <textarea  name='message' class='form-control' rows='5' required></textarea>

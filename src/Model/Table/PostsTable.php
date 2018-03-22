@@ -91,13 +91,24 @@ class PostsTable extends Table
         return $rules;
     }
 
-    public function getPosts($topic_id)
+    public function getPosts($topic_id, $paginate)
     {
+        $limit = $paginate['limit'];
+        $page = $paginate['page'] == 0 ? 1 : $paginate['page'];
+        $offset = $page * $limit - $limit;
+
         $query = "SELECT posts.nickname, topics.topic_id, message, posts.post_id, posts.created, posts.ip
         FROM topics
         LEFT JOIN posts on posts.topic_id = topics.topic_id
-        WHERE topics.topic_id = '".$topic_id."' ";
+        WHERE topics.topic_id = '".$topic_id."' 
+        LIMIT $offset, $limit";
 
-        return $this->db->execute($query)->fetchAll('obj');
+        $result['result'] = $this->db->execute($query)->fetchAll('obj');
+        $result['total'] = $this->db->execute("SELECT FOUND_ROWS() as total ")->fetch('obj')->total;
+        $result['pageCount'] = ceil($result['total']/ $limit); 
+        $result['limit'] = $limit;
+        $result['page'] = $page;
+
+        return $result;
     }
 }
