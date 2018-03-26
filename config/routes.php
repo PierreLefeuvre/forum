@@ -44,34 +44,28 @@ use Cake\Routing\Route\DashedRoute;
 Router::defaultRouteClass(DashedRoute::class);
 
 Router::scope('/', function (RouteBuilder $routes) {
-    /**
-     * Here, we are connecting '/' (base path) to a controller called 'Pages',
-     * its action called 'display', and we pass a param to select the view file
-     * to use (in this case, src/Template/Pages/home.ctp)...
-     */
-    $routes->connect('/', ['controller' => 'Pages', 'action' => 'display', 'home']);
 
-    /**
-     * ...and connect the rest of 'Pages' controller's URLs.
-     */
-    $routes->connect('/pages/*', ['controller' => 'Pages', 'action' => 'display']);
+    $routes->redirect(
+        '/',
+        ['_name' => 'indexForum', 'lang'=>'fr']
+    );
 
     $routes->connect(
-        '/:lang/forum', 
+        '/:lang', 
         ['controller' => 'Topic', 'action'=> 'index'],
         ['_name' => 'indexForum']
     )
     ->setPersist(['lang']);
 
     $routes->connect(
-        '/:lang/forum/topic/create', 
+        '/:lang/topic/create', 
         ['controller' => 'Topic', 'action' => 'createTopic'],
         ['_name' => 'createTopic']
     )
     ->setPersist(['lang']);
 
     $routes->connect(
-        '/:lang/forum/topic/:id', 
+        '/:lang/topic/:id', 
         ['controller' => 'Topic', 'action'=>'viewTopic'],
         ['_name' => 'viewTopic']
     )
@@ -80,7 +74,7 @@ Router::scope('/', function (RouteBuilder $routes) {
     ->setPersist(['lang', 'id']);
     
     $routes->connect(
-        '/:lang/forum/topic/delete/:id', 
+        '/:lang/topic/delete/:id', 
         ['controller' => 'Topic', 'action'=>'deleteTopic'],
         ['_name' => 'deleteTopic']
     )
@@ -88,7 +82,7 @@ Router::scope('/', function (RouteBuilder $routes) {
     ->setPersist(['lang']);
     
     $routes->connect(
-        '/:lang/forum/topic/:topic_id/edit/:post_id', 
+        '/:lang/topic/:topic_id/edit/:post_id', 
         ['controller' => 'Topic', 'action'=>'editPost'],
         ['_name' => 'editPost']
     )
@@ -96,14 +90,14 @@ Router::scope('/', function (RouteBuilder $routes) {
     ->setPersist(['lang']);
 
     $routes->connect(
-        '/:lang/forum/topic/post/add', 
+        '/:lang/topic/post/add', 
         ['controller' => 'Topic', 'action'=>'addPost'],
         ['_name' => 'addPost']
     )
     ->setPersist(['lang']);
 
     $routes->connect(
-        '/:lang/forum/topic/add',
+        '/:lang/topic/add',
         ['controller' => 'Topic', 'action'=>'addTopic'],
         ['_name' => 'addTopic']
     )
