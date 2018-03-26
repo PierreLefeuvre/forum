@@ -58,29 +58,30 @@ Router::scope('/', function (RouteBuilder $routes) {
 
     $routes->connect(
         '/:lang/forum', 
-        ['controller' => 'Topic'],
-        ['_name' => 'forum']
+        ['controller' => 'Topic', 'action'=> 'index'],
+        ['_name' => 'indexForum']
     )
     ->setPersist(['lang']);
 
     $routes->connect(
         '/:lang/forum/topic/create', 
-        ['controller' => 'Topic', 'action' => 'create'],
+        ['controller' => 'Topic', 'action' => 'createTopic'],
         ['_name' => 'createTopic']
     )
     ->setPersist(['lang']);
 
     $routes->connect(
         '/:lang/forum/topic/:id', 
-        ['controller' => 'Topic', 'action'=>'view'],
+        ['controller' => 'Topic', 'action'=>'viewTopic'],
         ['_name' => 'viewTopic']
     )
+    ->setPatterns(['id' => '\d+'])
     ->setPass(['id'])
     ->setPersist(['lang', 'id']);
     
     $routes->connect(
         '/:lang/forum/topic/delete/:id', 
-        ['controller' => 'Topic', 'action'=>'delete'],
+        ['controller' => 'Topic', 'action'=>'deleteTopic'],
         ['_name' => 'deleteTopic']
     )
     ->setPass(['id'])
@@ -88,7 +89,7 @@ Router::scope('/', function (RouteBuilder $routes) {
     
     $routes->connect(
         '/:lang/forum/topic/:topic_id/edit/:post_id', 
-        ['controller' => 'Topic', 'action'=>'edit'],
+        ['controller' => 'Topic', 'action'=>'editPost'],
         ['_name' => 'editPost']
     )
     ->setPass(['post_id', 'topic_id'])
@@ -102,8 +103,8 @@ Router::scope('/', function (RouteBuilder $routes) {
     ->setPersist(['lang']);
 
     $routes->connect(
-        '/:lang/forum/topic/add', 
-        ['controller' => 'Topic', 'action'=>'add'],
+        '/:lang/forum/topic/add',
+        ['controller' => 'Topic', 'action'=>'addTopic'],
         ['_name' => 'addTopic']
     )
     ->setPersist(['lang']);

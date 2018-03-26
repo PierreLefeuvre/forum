@@ -2,8 +2,6 @@
 
 <?php $this->extend('/Forum/layout'); ?>
 
-<div class="row">
-    <div class="col-md-offset-2 col-md-8">
         <?php foreach($topics['result'] as $topic): ?>
 
             <div class="thumbnail">
@@ -34,16 +32,13 @@
         <?php endforeach; ?>
         
     <br>
-    <div>
-    Page:
+    <div class='page'>
+    <?= __("Page") ?>:
         <?php for($i=1; $i <= $topics['pageCount']; $i++): ?>
             <a href="<?php echo $this->Paginator->generateUrl(['page' => $i]) ?>"><?= $i ?></a>
         <?php endfor; ?>
     </div>
-    
-    </div>
-    <div class='col-md-2'>
-        <a href="<?= $this->url->build(['_name'=>'createTopic']) ?>" type='button' class='btn btn-default'>+ Topic</a>
-    </div>
-</div>
+
+
+
 

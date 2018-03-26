@@ -3,3 +3,45 @@ msgstr "Le Forum"
 
 msgid "Title"
 msgstr "Titre"
+
+msgid "Page"
+msgstr "Page"
+
+msgid "Topic"
+msgstr "Topic"
+
+msgid "Message"
+msgstr "Message"
+
+msgid "Username"
+msgstr "Pseudo"
+
+msgid "Reply"
+msgstr "Répondre"
+
+msgid "edit"
+msgstr "editer"
+
+msgid "The topic has been saved."
+msgstr "Le topic est enregistré."
+
+msgid "The post has been saved."
+msgstr "Le post est enregistré."
+
+msgid "The topic could not be saved. Please, try again."
+msgstr "Le topic n'a pas pu être enregistré. Essayez de nouveau."
+
+msgid "The post could not be saved. Please, try again."
+msgstr "Le post n'a pas pu être enregistré. Essayez de nouveau."
+
+msgid "The topic could not be deleted. Please, try again."
+msgstr "Le topic n'a pas pu être supprimé. Essayez de nouveau."
+
+msgid "The post could not be deleted. Please, try again."
+msgstr "Le post n'a pas pu être supprimé. Essayez de nouveau."
+
+msgid "The topic has been deleted."
+msgstr "Le topic a été supprimé."
+
+msgid "The post has been deleted."
+msgstr "Le post a été supprimé."

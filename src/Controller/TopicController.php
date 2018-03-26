@@ -36,7 +36,7 @@ class TopicController extends AppController
         $this->render('/Forum/index');
     }
 
-    public function view($id = null)
+    public function viewTopic($id = null)
     {
         //Récupération du topic
         $result = $this->topicsTable->getTopic($id);
@@ -50,7 +50,7 @@ class TopicController extends AppController
 
         $this->render('/Forum/view');
     }
-    public function create()
+    public function createTopic()
     {
         $this->render('/Forum/create');
     }
@@ -69,14 +69,14 @@ class TopicController extends AppController
             $okP = $this->postsTable->save($posts);
 
             if ($okP) {
-                $this->Flash->success('The post has been saved.');
+                $this->Flash->success(__('The post has been saved.'));
                 return $this->redirect(['_name' => 'viewTopic', 'id' => $postData['topic_id']]);
             }
-            $this->Flash->error('The post could not be saved. Please, try again.');
+            $this->Flash->error(__('The post could not be saved. Please, try again.'));
         }
         //$this->set(compact('topic'));
     }
-    public function add()
+    public function addTopic()
     {
         if ($this->request->is('post')) {
           
@@ -100,16 +100,15 @@ class TopicController extends AppController
             $okP = $this->postsTable->save($posts);
             
             if ($okP && $okT) {
-                $this->Flash->success('The topic has been saved.');
-                return $this->redirect(['_name' => 'forum']);
+                $this->Flash->success(__('The topic has been saved.'));
+                return $this->redirect(['_name' => 'viewTopic', $topics->topic_id]);
             }
-
-            $this->Flash->error('The topic could not be saved. Please, try again.');
+            $this->Flash->error(__('The topic could not be saved. Please, try again.'));
         }
         return $this->redirect(['_name' => 'createTopic']);
     }
 
-    public function edit($post_id, $topic_id = null)
+    public function editPost($post_id, $topic_id = null)
     {
         $post = $this->postsTable->get($post_id);
 
@@ -133,7 +132,7 @@ class TopicController extends AppController
      * @return \Cake\Http\Response|null Redirects to index.
      * @throws \Cake\Datasource\Exception\RecordNotFoundException When record not found.
      */
-    public function delete($id = null)
+    public function deleteTopic($id = null)
     {
         $this->request->allowMethod(['GET','post', 'delete']);
 

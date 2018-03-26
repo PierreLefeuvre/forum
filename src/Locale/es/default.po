@@ -3,3 +3,45 @@ msgstr "El Forum"
 
 msgid "Title"
 msgstr "Titulo"
+
+msgid "Page"
+msgstr "Paje"
+
+msgid "Topic"
+msgstr "Tema"
+
+msgid "Message"
+msgstr "mensaje"
+
+msgid "Username"
+msgstr "Usario"
+
+msgid "Reply"
+msgstr "Respuesta"
+
+msgid "edit"
+msgstr "editar"
+
+msgid "The topic has been saved."
+msgstr "El tema ha sido guardado."
+
+msgid "The post has been saved."
+msgstr "El post ha sido guardado."
+
+msgid "The topic could not be saved. Please, try again."
+msgstr "El tema no pudo ser guardado. Inténtalo de nuevo."
+
+msgid "The post could not be saved. Please, try again."
+msgstr "El post no pudo ser guardado. Inténtalo de nuevo."
+
+msgid "The topic could not be deleted. Please, try again."
+msgstr "El tema no pudo ser eliminado. Inténtalo de nuevo."
+
+msgid "The post could not be deleted. Please, try again."
+msgstr "El post no pudo ser eliminado. Inténtalo de nuevo."
+
+msgid "The topic has been deleted."
+msgstr "El tema ha sido eliminado."
+
+msgid "The post has been deleted."
+msgstr "El post ha sido eliminado."

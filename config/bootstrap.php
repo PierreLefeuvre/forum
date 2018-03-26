@@ -73,6 +73,12 @@ try {
 }
 
 /*
+ * Si debug activé et qu'on est pas en local => on désactive debug
+ */
+if(Configure::read('debug') && $_SERVER['SERVER_NAME'] !== 'localhost')
+    Configure::write('debug', false);
+
+/*
  * Load an environment local configuration file.
  * You can use a file like app_local.php to provide local overrides to your
  * shared configuration.

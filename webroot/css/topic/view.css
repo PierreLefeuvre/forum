@@ -8,20 +8,25 @@
     border: 1px solid #ddd;
     margin-bottom: 4px;
     margin-top: 4px;
-    box-shadow: 0 1px #FFFFFF inset, 0 1px 3px rgba(34, 25, 25, 0.3);
+    box-shadow: 0 1px #ecf0f1 inset, 0 1px 3px rgba(34, 25, 25, 0.3);
 }
 .c1{
-    background-color: #ffffff;
+    background-color: #ecf0f1;
+    box-shadow: 0 1px #ecf0f1 inset, 0 1px 3px rgba(34, 25, 25, 0.3);
+    border-color: #ecf0f1;
 }
 .c2{
-    background-color: #f9f9f9;
+    background-color: #bdc3c7;
+    box-shadow: 0 1px #bdc3c7 inset, 0 1px 3px rgba(34, 25, 25, 0.3);
+    border-color: #bdc3c7;
 }
 .nickname{
     font-weight: bold;
     display: inline-block;
 }
 .topic{
-    margin-bottom: 100px;
+    /* margin-bottom: 100px; */
+    padding: 6px;
 }
 .post-message{
     margin-top: 20px;
@@ -38,4 +43,7 @@
     position: relative;
     bottom: 0px;
     right: 6px;
+}
+h3{
+    text-align: center;
 }

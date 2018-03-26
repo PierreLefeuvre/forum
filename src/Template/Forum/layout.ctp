@@ -1,29 +1,41 @@
-<style>
-    body{
-        background-color: #faf7fc;
-    }
-</style>
-<a href="<?= $this->url->build(['_name'=>'forum']) ?>">
-    <h1><?= __('Forum') ?></h1>
-</a>
-
-
-
-<div class='dropdown'>
-
-    <button class='btn btn-default dropdown-toggle' type='button'  id='dropDownMenu1' data-toggle='dropdown' 
-    aria-haspopup='true' aria-expanded='true' >
-        <?= $this->lang->getLang() ?>
-        <span class='caret'></span>
-    </button>
-
-    <ul class='dropdown-menu' aria-labelledby='dropDownMenu1'>
-        <?php foreach(['es', 'fr'] as $lang): ?>
-            <li class="<?= $lang == $this->lang->getLang() ? 'active' : ''  ?>">
-                <?= $this->html->link($lang, ['lang'=> $lang]) ?>
-            </li>
-        <?php endforeach; ?>
-    </ul>    
+<div id='header'>
+    <a href="<?= $this->url->build(['_name'=>'indexForum']) ?>" >
+        <h1><?= __('Forum') ?></h1>
+    </a>
 </div>
 
-<?= $this->fetch('content') ?>
+<div class="row">
+
+    <!-- colonne de gauche -->
+    <div class='col-md-2'>
+        <!-- choix de la langue -->
+        <div class='dropdown'>
+            <button class='btn btn-default dropdown-toggle' type='button'  id='dropDownMenu1' data-toggle='dropdown' 
+            aria-haspopup='true' aria-expanded='true' >
+                <?= $this->lang->getLang() ?>
+                <span class='caret'></span>
+            </button>
+            <ul class='dropdown-menu' aria-labelledby='dropDownMenu1'>
+                <?php foreach(['es', 'fr', 'en'] as $lang): ?>
+                    <li class="<?= $lang == $this->lang->getLang() ? 'active' : ''  ?>">
+                        <?= $this->html->link($lang, ['lang'=> $lang]) ?>
+                    </li>
+                <?php endforeach; ?>
+            </ul>    
+        </div>
+    </div>
+    
+    <!-- contenu principale -->
+    <div class="col-md-8">
+        <div class='content'>
+            <?= $this->fetch('content') ?>
+        </div>
+    </div>
+
+    <!-- colonne de droite -->
+    <div class='col-md-2'>
+        <!-- bouton pour ajouter un topic -->
+        <a href="<?= $this->url->build(['_name'=>'createTopic']) ?>" type='button' class='btn btn-default'>+ <?= __("Topic") ?></a>
+    </div>
+    
+</div>
