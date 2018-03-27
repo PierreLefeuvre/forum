@@ -27,6 +27,7 @@
 .topic{
     /* margin-bottom: 100px; */
     padding: 6px;
+    position: relative;
 }
 .post-message{
     margin-top: 20px;
@@ -46,4 +47,11 @@
 }
 h3{
     text-align: center;
+}
+#btn-reply{
+    position: absolute;
+    right: 10px;
+}
+input[name="nickname"]{
+    max-width: 200px;
 }

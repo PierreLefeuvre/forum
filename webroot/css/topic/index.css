@@ -32,3 +32,32 @@
     position:absolute;
     right: 30px;
 }
+
+@media screen and (max-width: 640px) {
+    .thumbnail{
+        height: 45px;
+    }
+    .topic-info{
+        display:block;
+        position:relative;
+        right: none;
+        width: 100%;
+        left: 0px;
+    }
+    .pull-right{
+        float: none;
+    }
+    .div-delete {
+        display: inline-block;
+        width: 15px;
+        right: 5px;
+        position: absolute;
+        top: -13px;
+    }
+    .created-date {
+        display: inline-block;
+        margin-right: 7px;
+        position: relative;
+        left: 5px;
+    }
+}

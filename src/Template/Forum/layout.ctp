@@ -7,7 +7,7 @@
 <div class="row">
 
     <!-- colonne de gauche -->
-    <div class='col-md-2'>
+    <div class='col-xs-4 col-sm-4 col-md-2'>
         <!-- choix de la langue -->
         <div class='dropdown'>
             <button class='btn btn-default dropdown-toggle' type='button'  id='dropDownMenu1' data-toggle='dropdown' 
@@ -24,16 +24,22 @@
             </ul>    
         </div>
     </div>
-    
+
+    <!-- s'affiche uniquement sur les petit ecran -->
+    <div class='col-xs-4 col-sm-4 hidden-lg hidden-md pull-right'>
+        <!-- bouton pour ajouter un topic -->
+        <a href="<?= $this->url->build(['_name'=>'createTopic']) ?>" type='button' class='btn btn-default pull-right'>+ <?= __("Topic") ?></a>
+    </div>
+
     <!-- contenu principale -->
-    <div class="col-md-8">
+    <div class="col-xs-12 col-sm-12 col-md-8 ">
         <div class='content'>
             <?= $this->fetch('content') ?>
         </div>
     </div>
 
     <!-- colonne de droite -->
-    <div class='col-md-2'>
+    <div class='col-md-2 hidden-xs hidden-sm'>
         <!-- bouton pour ajouter un topic -->
         <a href="<?= $this->url->build(['_name'=>'createTopic']) ?>" type='button' class='btn btn-default'>+ <?= __("Topic") ?></a>
     </div>

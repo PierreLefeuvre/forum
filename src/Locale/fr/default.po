@@ -45,3 +45,6 @@ msgstr "Le topic a été supprimé."
 
 msgid "The post has been deleted."
 msgstr "Le post a été supprimé."
+
+msgid "Failed data recovery. Please, try again."
+msgstr "Echec de récupétion des données. Essayez de nouveau."

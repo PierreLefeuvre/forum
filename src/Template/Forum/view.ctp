@@ -46,7 +46,9 @@
 
         <div class='form-inline'>
             <input type='text' class='form-control pull-left' name='nickname' placeholder="<?= __('Username') ?>" required />
-            <button type='submit' class='btn btn-default pull-right'  ><?= __('Reply') ?></button>
+        </div>
+        <div class='form-inline'>
+            <button id='btn-reply' type='submit' class='btn btn-default'  ><?= __('Reply') ?></button>
         </div>
             
         <input type='hidden' value="<?= $post_id ?>" name='topic_id' />

@@ -108,16 +108,24 @@ class TopicController extends AppController
         return $this->redirect(['_name' => 'createTopic']);
     }
 
-    public function editPost($post_id, $topic_id = null)
+    public function editPost($post_id, $topic_id )
     {
-        $post = $this->postsTable->get($post_id);
+        $post = $this->postsTable
+            ->find()
+            ->where(['topic_id' => $topic_id, 'post_id' => $post_id, 'ip' => $_SERVER['REMOTE_ADDR']])
+            ->first();
 
-        if ($this->request->is(['patch', 'post', 'put'])) {
+        if(!$post){
+            $this->Flash->error(__('Failed data recovery. Please, try again.'));
+            return $this->redirect(['_name' => 'viewTopic', $topic_id]);
+        }
+
+        if ($this->request->is(['patch', 'post', 'put']) && $post) {
             $post = $this->postsTable->patchEntity($post, $this->request->getData());
             if ($this->postsTable->save($post)) {
                 $this->Flash->success(__('The topic has been saved.'));
 
-                return $this->redirect(['action' => 'view', $topic_id]);
+                return $this->redirect(['_name' => 'viewTopic', $topic_id]);
             }
             $this->Flash->error(__('The topic could not be saved. Please, try again.'));
         }

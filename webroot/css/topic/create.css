@@ -1,3 +1,6 @@
 .content{
     padding: 10px;
 }
+input[name="nickname"]{
+    max-width: 200px;
+}
