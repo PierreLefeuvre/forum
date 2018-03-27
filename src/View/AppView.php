@@ -41,5 +41,6 @@ class AppView extends View
         $this->loadHelper('Paginator');
         $this->loadHelper('Lang');
         $this->loadHelper('Url');
+        $this->loadHelper('Html');
     }
 }
