@@ -11,18 +11,21 @@
     box-shadow: 0 1px #ecf0f1 inset, 0 1px 3px rgba(34, 25, 25, 0.3);
 }
 .c1{
-    background-color: #ecf0f1;
-    box-shadow: 0 1px #ecf0f1 inset, 0 1px 3px rgba(34, 25, 25, 0.3);
-    border-color: #ecf0f1;
+    background-color: #f1f2f6;
+    box-shadow: 0 1px #f1f2f6 inset, 0 1px 3px rgba(34, 25, 25, 0.3);
+    border-color: #f1f2f6;
 }
 .c2{
-    background-color: #bdc3c7;
-    box-shadow: 0 1px #bdc3c7 inset, 0 1px 3px rgba(34, 25, 25, 0.3);
-    border-color: #bdc3c7;
+    background-color: #ffffff;
+    box-shadow: 0 1px #ffffff inset, 0 1px 3px rgba(34, 25, 25, 0.3);
+    border-color: #ffffff;
 }
 .nickname{
-    font-weight: bold;
     display: inline-block;
+    font-weight: 600;
+}
+.post-date{
+    font-weight: 400;
 }
 .topic{
     /* margin-bottom: 100px; */
@@ -54,4 +57,14 @@ h3{
 }
 input[name="nickname"]{
     max-width: 200px;
+}
+
+@media screen and (max-width: 640px) {
+    .nickname{
+        width: 150px;
+        display: inline-block;
+        overflow: hidden;
+        white-space: nowrap;
+        text-overflow: ellipsis;
+    }
 }

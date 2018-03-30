@@ -12,10 +12,10 @@
 
                 <div class='pull-right topic-info' >
 
-                    <div class='created-date'><?= $this->Date->formatDate($topic->created); ?></div>
+                    <div class='created-date'><?= $this->Date->formatDate($topic->modified); ?></div>
 
                     <div class='nickname'>
-                        <?= mb_strimwidth($topic->nickname, 0, 17, "...") ?>
+                        <?= mb_strimwidth($topic->nickname, 0, 15, "...") ?>
                     </div>
                     
                     <div class='div-delete'>

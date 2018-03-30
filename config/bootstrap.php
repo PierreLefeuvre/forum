@@ -75,7 +75,7 @@ try {
 /*
  * Si debug activé et qu'on est pas en local => on désactive debug
  */
-if(Configure::read('debug') && $_SERVER['SERVER_NAME'] !== 'localhost')
+if(Configure::read('debug') && Configure::read('server_name') !== 'localhost')
     Configure::write('debug', false);
 
 /*

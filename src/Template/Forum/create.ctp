@@ -2,23 +2,27 @@
 
 <?= $this->Html->css('topic/create.css') ?>
 
-<form action="<?= $this->url->build(['_name' => 'addTopic']) ?>" method='POST'>
+<?= $this->form->create(null,['url'=>$this->url->build(['_name' => 'addTopic'])]) ?>
 
     <div class='form-group'>
-        <label><?= __('Title') ?></label>
-            <input type='text' class='form-control' name='title' required/>
+        <label for='title'><?= __('Title') ?></label>
+        <?= $this->form->text('title', ['class' => 'form-control', 'required']); ?>
     </div>
 
     <div class='form-group'>
-        <label><?= __('Username') ?></label>
-        <input type='text' class='form-control' name='nickname' required/>
+        <label for='nickname'><?= __('Nickname') ?></label>
+        <?= $this->form->text('nickname', [
+            'class' => 'form-control', 
+            'required',
+            'value'=> $this->request->session()->read('user.nickname')
+            ]); ?>
     </div>
 
     <div class='form-group'>
-        <label><?= __('Message') ?></label>
-        <textarea class='form-control' name='message' required rows='4'></textarea>
+        <label for='message'><?= __('Message') ?></label>
+        <?= $this->form->textarea('message', ['class' => 'form-control','required','rows' => '4']) ?>        
     </div>
 
-    <input type='submit' class='btn btn-default' value='OK'/>
+    <?= $this->form->button('OK', ['class'=>'btn btn-default']) ?>
 
-</form>
+<?= $this->form->end(); ?>

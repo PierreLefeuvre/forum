@@ -13,7 +13,7 @@ msgstr "Topic"
 msgid "Message"
 msgstr "Message"
 
-msgid "Username"
+msgid "Nickname"
 msgstr "Pseudo"
 
 msgid "Reply"
@@ -48,3 +48,6 @@ msgstr "Le post a été supprimé."
 
 msgid "Failed data recovery. Please, try again."
 msgstr "Echec de récupétion des données. Essayez de nouveau."
+
+msgid "You are not allowed to delete this."
+msgstr "Vous n'êtes pas autorisé à supprimer ceci."

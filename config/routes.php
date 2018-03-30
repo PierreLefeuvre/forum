@@ -74,7 +74,7 @@ Router::scope('/', function (RouteBuilder $routes) {
     ->setPersist(['lang', 'id']);
     
     $routes->connect(
-        '/:lang/topic/delete/:id', 
+        '/:lang/topic/:id/delete', 
         ['controller' => 'Topic', 'action'=>'deleteTopic'],
         ['_name' => 'deleteTopic']
     )

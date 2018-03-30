@@ -13,7 +13,7 @@ msgstr "Tema"
 msgid "Message"
 msgstr "mensaje"
 
-msgid "Username"
+msgid "Nickname"
 msgstr "Usario"
 
 msgid "Reply"
@@ -45,3 +45,9 @@ msgstr "El tema ha sido eliminado."
 
 msgid "The post has been deleted."
 msgstr "El post ha sido eliminado."
+
+msgid "Failed data recovery. Please, try again."
+msgstr "Recuperacion de datos fallida. inténtalo de nuevo."
+
+msgid "You are not allowed to delete this."
+msgstr "No puedes borrar esto."

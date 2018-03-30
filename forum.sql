@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Client :  127.0.0.1
--- Généré le :  Lun 19 Février 2018 à 16:11
+-- Généré le :  Mer 28 Mars 2018 à 11:07
 -- Version du serveur :  5.7.14
 -- Version de PHP :  5.6.25
 
@@ -58,13 +58,16 @@ CREATE TABLE `topics` (
 --
 ALTER TABLE `posts`
   ADD PRIMARY KEY (`post_id`),
-  ADD KEY `FK_post_topic_id` (`topic_id`);
+  ADD KEY `FK_post_topic_id` (`topic_id`),
+  ADD KEY `modified` (`modified`);
+ALTER TABLE `posts` ADD FULLTEXT KEY `message` (`message`);
 
 --
 -- Index pour la table `topics`
 --
 ALTER TABLE `topics`
   ADD PRIMARY KEY (`topic_id`);
+ALTER TABLE `topics` ADD FULLTEXT KEY `title` (`title`);
 
 --
 -- AUTO_INCREMENT pour les tables exportées
@@ -74,12 +77,12 @@ ALTER TABLE `topics`
 -- AUTO_INCREMENT pour la table `posts`
 --
 ALTER TABLE `posts`
-  MODIFY `post_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=40;
+  MODIFY `post_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=57;
 --
 -- AUTO_INCREMENT pour la table `topics`
 --
 ALTER TABLE `topics`
-  MODIFY `topic_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=32;
+  MODIFY `topic_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=41;
 --
 -- Contraintes pour les tables exportées
 --

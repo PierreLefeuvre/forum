@@ -1,17 +1,17 @@
 <?php $this->extend('/Forum/layout'); ?>
 
-<form action="<?= $this->url->build(['_name' => 'editPost', 'post_id' => $post->post_id, 'topic_id' => $post->topic_id]) ?>" method='POST' class='form-edit'>
+<?= $this->form->create($post, ['class' =>'form-edit', 'type'=> 'post', 'url' => $this->url->build(['_name' => 'editPost', 'post_id' => $post->post_id, 'topic_id' => $post->topic_id])]); ?>
+
     <div class='form-group'>
-        <textarea  name='message' class='form-control' rows='9' required><?= $post->message ?></textarea>
+        <?= $this->form->textarea('message', ['class'=>'form-control', 'rows'=> '9', 'required']) ?> 
     </div>
 
     <div class='form-inline'>
-        
-        <button type='submit' class='btn btn-default pull-right'  >Edit</button>
+        <?= $this->form->button('Edit', ['class'=>'btn btn-default pull-right']) ?>
     </div>
     
-    <input type='hidden' value="<?= $post->post_id ?>" name='post_id' />
-    <input type='hidden' value="<?= $post->topic_id ?>" name='topic_id' />
+    <?= $this->form->hidden('post_id', ['value' => $post->post_id]) ?>
+    <?= $this->form->hidden('topic_id', ['value' => $post->topic_id]) ?>
 
     <br><br>
-</form>
+<?= $this->form->end(); ?>

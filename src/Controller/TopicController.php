@@ -58,23 +58,23 @@ class TopicController extends AppController
     {
         if ($this->request->is('post')) {
 
-           $postData = $this->request->getData();
+            $postData = $this->request->getData();
+            $postData['ip'] = $_SERVER['REMOTE_ADDR'];
 
-            $posts = $this->postsTable->newEntity();
-            $posts->nickname = $postData['nickname'];
-            $posts->topic_id = $postData['topic_id'];
-            $posts->message = $postData['message'];
-            $posts->ip = $_SERVER['REMOTE_ADDR'];
+            $this->request->session()->write('user.nickname', $postData['nickname']);
+            
+            $posts = $this->postsTable->newEntity($postData);
 
             $okP = $this->postsTable->save($posts);
 
             if ($okP) {
                 $this->Flash->success(__('The post has been saved.'));
+
                 return $this->redirect(['_name' => 'viewTopic', 'id' => $postData['topic_id']]);
             }
             $this->Flash->error(__('The post could not be saved. Please, try again.'));
         }
-        //$this->set(compact('topic'));
+        return $this->redirect(['_name' => 'addPost']);
     }
     public function addTopic()
     {
@@ -88,14 +88,14 @@ class TopicController extends AppController
             // });
 
             $topics = $this->topicsTable->newEntity($this->request->getData());
-            //$topics->title = $postData['title'];
+
             $okT = $this->topicsTable->save($topics);
             
-            $posts = $this->postsTable->newEntity($this->request->getData());
-            //$posts->nickname = $postData['nickname'];
-            $posts->topic_id = $topics->topic_id;
-            //$posts->message = $postData['message'];
-            $posts->ip = $_SERVER['REMOTE_ADDR'];
+            $postData = $this->request->getData();
+            $postData['ip'] =  $_SERVER['REMOTE_ADDR'];
+            $postData['topic_id'] = $topics->topic_id;
+
+            $posts = $this->postsTable->newEntity($postData);
 
             $okP = $this->postsTable->save($posts);
             
@@ -140,13 +140,24 @@ class TopicController extends AppController
      * @return \Cake\Http\Response|null Redirects to index.
      * @throws \Cake\Datasource\Exception\RecordNotFoundException When record not found.
      */
-    public function deleteTopic($id = null)
+    public function deleteTopic($topic_id = null)
     {
         $this->request->allowMethod(['GET','post', 'delete']);
 
         $this->topicsTable->newEntity();
 
-        $topic = $this->topicsTable->get($id);
+        $post = $this->postsTable
+        ->find('all',['fields'=>'ip'])
+        ->where(['topic_id' => $topic_id])
+        ->order(['created' => 'ASC'])
+        ->first();
+
+        if($post->ip != $_SERVER['REMOTE_ADDR']){
+            $this->flash->error(_('You are not allowed to delete this.'));
+            return $this->redirect(['_name' => 'indexForum']); 
+        }
+
+        $topic = $this->topicsTable->get($topic_id);
 
         if ($this->topicsTable->delete($topic)) {
             $this->Flash->success(__('The topic has been deleted.'));
@@ -154,6 +165,6 @@ class TopicController extends AppController
             $this->Flash->error(__('The topic could not be deleted. Please, try again.'));
         }
 
-        return $this->redirect(['_name' => 'forum']);
+        return $this->redirect(['_name' => 'indexForum']);
     }
 }

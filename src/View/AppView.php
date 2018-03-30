@@ -42,5 +42,6 @@ class AppView extends View
         $this->loadHelper('Lang');
         $this->loadHelper('Url');
         $this->loadHelper('Html');
+        $this->loadHelper('Form');
     }
 }

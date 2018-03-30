@@ -13,7 +13,7 @@
     <div class="post <?= $c ?>">
         <div>
             <div class='nickname'><?= $post->nickname ?></div>
-            <div class='pull-right'>
+            <div class='post-date pull-right'>
                 <?= $this->Date->formatDate($post->created, 'Y-m-d H:i:s'); ?>
             </div>
         </div>
@@ -33,26 +33,33 @@
     <div class='page'>
     Page:
         <?php for($i=1; $i <= $posts['pageCount']; $i++): ?>
-            <!-- <a href="<?php echo $this->Paginator->generateUrl(['page' => $i]) ?>"><?= $i ?></a> -->
             <?= $this->html->link($i, ['page' => $i]) ?>
         <?php endfor; ?>
     </div>
 
-    <form action="<?= $this->url->build(['_name' => 'addPost']) ?>" method='POST' class='form-answer'>
+    <?= $this->form->create(null, ['class' =>'form-answer', 'type'=> 'post', 'url' => $this->url->build(['_name' => 'addPost'])]); ?>
 
         <div class='form-group'>
-            <textarea  name='message' class='form-control' rows='5' required></textarea>
+            <?= $this->form->textarea('message', ['class'=>'form-control', 'rows'=>'5', 'required']) ?>
         </div>
 
         <div class='form-inline'>
-            <input type='text' class='form-control pull-left' name='nickname' placeholder="<?= __('Username') ?>" required />
+            <?= $this->form->text('nickname', [
+                'class'=>'form-control pull-left', 
+                'placeholder'=> __('Nickname'), 
+                'value' => $this->request->session()->read('user.nickname'),
+                'required'
+                ]) ?>
         </div>
+
         <div class='form-inline'>
-            <button id='btn-reply' type='submit' class='btn btn-default'  ><?= __('Reply') ?></button>
+            <?= $this->form->button(__('Reply'), ['id'=>'btn-reply', 'class'=> 'btn btn-default']) ?>
         </div>
-            
-        <input type='hidden' value="<?= $post_id ?>" name='topic_id' />
+        
+        <?= $this->form->hidden('topic_id', ['value' => $post_id]) ?>
+        
         <br><br>
-    </form>
+
+    <?= $this->form->end(); ?>
 
 </div>

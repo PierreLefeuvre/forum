@@ -62,12 +62,12 @@ class PostsTable extends Table
 
         $validator
             ->scalar('message')
-            ->allowEmpty('message');
+            ->notEmpty('message', 'Please fill this field');
 
         $validator
             ->scalar('nickname')
             ->maxLength('nickname', 256)
-            ->allowEmpty('nickname');
+            ->notEmpty('nickname', 'Please fill this field');
 
         $validator
             ->scalar('ip')

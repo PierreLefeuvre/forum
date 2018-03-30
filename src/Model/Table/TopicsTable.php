@@ -37,6 +37,7 @@ class TopicsTable extends Table
 
         $this->addBehavior('Timestamp');
 
+        $this->hasMany('Posts');
         $this->db = ConnectionManager::get('default');
     }
 
@@ -55,7 +56,7 @@ class TopicsTable extends Table
         $validator
             ->scalar('title')
             ->maxLength('title', 256)
-            ->allowEmpty('title');
+            ->notEmpty('title', 'Please fill this field');
 
         return $validator;
     }
@@ -67,7 +68,7 @@ class TopicsTable extends Table
         $offset = $page * $limit - $limit;
 
         $query = "
-        SELECT SQL_CALC_FOUND_ROWS topics.*, nickname , ip
+        SELECT SQL_CALC_FOUND_ROWS topics.topic_id, topics.title, posts.nickname , posts.ip, posts.created, posts.modified
         FROM topics 
         JOIN posts on posts.post_id = (
             SELECT post_id 
@@ -75,7 +76,7 @@ class TopicsTable extends Table
             WHERE posts.topic_id = topics.topic_id 
             ORDER BY post_id 
             LIMIT 1
-        ) LIMIT $offset, $limit";
+        ) ORDER BY modified desc LIMIT $offset, $limit ";
 
         $result['result'] = $this->db->execute($query)->fetchAll('obj');
         $result['total'] = $this->db->execute("SELECT FOUND_ROWS() as total ")->fetch('obj')->total;
