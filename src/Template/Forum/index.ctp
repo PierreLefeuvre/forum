@@ -1,5 +1,7 @@
 <?= $this->Html->css('topic/index.css') ?>
 
+<?php $this->assign('title', 'index'); ?>
+
 <?php $this->extend('/Forum/layout'); ?>
 
         <?php foreach($topics['result'] as $topic): ?>

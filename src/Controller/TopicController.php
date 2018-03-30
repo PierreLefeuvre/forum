@@ -95,6 +95,8 @@ class TopicController extends AppController
             $postData['ip'] =  $_SERVER['REMOTE_ADDR'];
             $postData['topic_id'] = $topics->topic_id;
 
+            $this->request->session()->write('user.nickname', $postData['nickname']);
+            
             $posts = $this->postsTable->newEntity($postData);
 
             $okP = $this->postsTable->save($posts);

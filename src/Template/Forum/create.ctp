@@ -14,7 +14,8 @@
         <?= $this->form->text('nickname', [
             'class' => 'form-control', 
             'required',
-            'value'=> $this->request->session()->read('user.nickname')
+            'value'=> $this->request->session()->read('user.nickname'),
+            'placeholder' => __('Nickname')
             ]); ?>
     </div>
 
