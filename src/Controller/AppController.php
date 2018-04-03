@@ -62,6 +62,8 @@ class AppController extends Controller
             $this->Security->requireSecure();
     }
     public function forceSSL(){
+        $_SERVER['HTTPS'] = env('HTTP_HTTPS'); //$_SERVER['HTTPS'] n'est bizarrement pas définie...
+        if(!env('HTTP_HTTPS'))
         return $this->redirect('https://'. env('SERVER_NAME') . $this->request->getRequestTarget());
     }
 }
