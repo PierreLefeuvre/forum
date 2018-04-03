@@ -4,10 +4,13 @@
 }
 .nickname{
     font-weight: bold;
-    width: 130px;
+    width: 160px;
     padding-left: 7px;
     border-left: 1px solid gray;
     display: inline-block;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
 }
 .title{
     width: 175px;
@@ -26,6 +29,7 @@
     display: inline-block;
     margin-right: 7px;
     width: 75px;
+    overflow: hidden;
 }
 .topic-info{
     /* width: 265px; */
@@ -33,7 +37,15 @@
     position:absolute;
     right: 30px;
 }
-
+.title{
+    width: 85%;
+    font-weight: bold;
+    font-size: 15px;
+    display: inline-block;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+}
 @media screen and (max-width: 640px) {
     .thumbnail{
         height: 45px;
@@ -60,12 +72,16 @@
         margin-right: 7px;
         position: relative;
         left: 5px;
+        font-size: 12px;
     }
     .title{
-        width: 229px;
         display: block;
         overflow: hidden;
         white-space: nowrap;
         text-overflow: ellipsis;
+    }
+    .nickname{
+        width: 130px;
+        font-size: 12px;
     }
 }

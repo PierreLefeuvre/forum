@@ -1,8 +1,6 @@
 .post{
-    /* min-height: 100px; */
     padding: 5px;
     padding-bottom: 20px;
-    /* padding-top: 20px; */
     border-radius: 0.2rem;
     border-color: #6c757d;
     border: 1px solid #ddd;
@@ -28,7 +26,6 @@
     font-weight: 400;
 }
 .topic{
-    /* margin-bottom: 100px; */
     padding: 6px;
     position: relative;
 }
@@ -37,15 +34,13 @@
     margin-left: 7px;
     margin-bottom: 5px;
     display: block;
-    /* padding-top: 20px; */
 }
 .form-answer{
     margin-top: 10px;
-
 }
 .btn-edit{
     position: relative;
-    bottom: 0px;
+    bottom: -15px;
     right: 6px;
 }
 h3{
@@ -58,7 +53,13 @@ h3{
 input[name="nickname"]{
     max-width: 200px;
 }
-
+.edit-info{
+    font-style: italic;
+    font-size: 12px;
+    display: inline-block;
+    position: relative;
+    bottom: -15px;
+}
 @media screen and (max-width: 640px) {
     .nickname{
         width: 150px;

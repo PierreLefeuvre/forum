@@ -97,7 +97,7 @@ class PostsTable extends Table
         $page = $paginate['page'] == 0 ? 1 : $paginate['page'];
         $offset = $page * $limit - $limit;
 
-        $query = "SELECT posts.nickname, topics.topic_id, message, posts.post_id, posts.created, posts.ip
+        $query = "SELECT posts.nickname, topics.topic_id, message, posts.post_id, posts.created, posts.ip, posts.modified
         FROM topics
         LEFT JOIN posts on posts.topic_id = topics.topic_id
         WHERE topics.topic_id = '".$topic_id."' 

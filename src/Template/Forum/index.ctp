@@ -9,7 +9,7 @@
             <div class="thumbnail">
 
                 <a href="<?= $this->url->build(['_name'=>'viewTopic', 'id'=> $topic->topic_id]) ?>">
-                    <span class='title'><?= mb_strimwidth($topic->title, 0, 95, '...') ?></span>
+                    <span class='title'><?= $topic->title ?></span>
                 </a>
 
                 <div class='pull-right topic-info' >
@@ -17,7 +17,7 @@
                     <div class='created-date'><?= $this->Date->formatDate($topic->modified); ?></div>
 
                     <div class='nickname'>
-                        <?= mb_strimwidth($topic->nickname, 0, 15, "...") ?>
+                        <?= $topic->nickname ?>
                     </div>
                     
                     <div class='div-delete'>

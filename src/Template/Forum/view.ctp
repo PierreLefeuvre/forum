@@ -20,6 +20,10 @@
         <div>
             <div class='post-message'><?= nl2br(htmlspecialchars($post->message)); ?></div>
             
+            <div class='edit-info'>
+                <?= ($post->created != $post->modified) ? __("Message edited at {0}", $this->Date->formatDate($post->modified, 'Y-m-d H:i:s')) : '' ?>
+            </div>
+
             <div class='btn-edit pull-right'>
                 <?php if($post->ip == $_SERVER['REMOTE_ADDR']): ?>
                     <a href="<?= $this->url->build(['_name'=>'editPost', 'post_id' => $post->post_id, 'topic_id' => $post->topic_id]) ?>" ><?= __('edit') ?></a>

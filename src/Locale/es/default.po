@@ -50,4 +50,7 @@ msgid "Failed data recovery. Please, try again."
 msgstr "Recuperacion de datos fallida. inténtalo de nuevo."
 
 msgid "You are not allowed to delete this."
-msgstr "No puedes borrar esto."
+msgstr "No puedes borrar esto.
+
+msgid "Message edited at {0}"
+msgstr "Mensaje editado a las {0}"
